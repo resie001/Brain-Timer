@@ -125,16 +125,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun generateResult(total: TextView, correct: TextView, wrong: TextView) {
         with(total) {
             this.visibility = View.VISIBLE
-            this.text = this@MainActivity.totalQuestion.toString()
+            this.text = "Total: ${this@MainActivity.totalQuestion.toString()}"
         }
         with(correct) {
             this.visibility = View.VISIBLE
-            this.text = this@MainActivity.totalCorrectQuestion.toString()
+            this.text = "Benar: ${this@MainActivity.totalCorrectQuestion.toString()}"
         }
         with(wrong) {
             this.visibility = View.VISIBLE
             this.text =
-                (this@MainActivity.totalQuestion - this@MainActivity.totalCorrectQuestion).toString()
+                "Salah: ${this@MainActivity.totalQuestion - this@MainActivity.totalCorrectQuestion}"
         }
     }
 
