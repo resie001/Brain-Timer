@@ -1,6 +1,7 @@
 package lab.chevalier.braintrainer
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.View
 import android.widget.Button
 import android.widget.GridLayout
@@ -36,7 +37,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         when (p0) {
             this.binding.btnStart -> this.start(
                 this.binding.btnStart,
-                this.binding.gridContainer
+                this.binding.gridContainer,
+                this.binding.tvTimer,
+                this.binding.tvResult
             )
             this.binding.btnChoice1 -> this.checkAnswer(
                 this.binding.btnChoice1.text.toString().toInt(),
@@ -63,7 +66,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun start(
         button: Button,
-        gridLayout: GridLayout
+        gridLayout: GridLayout,
+        timer: TextView,
+        result: TextView
     ) {
         button.visibility = View.GONE
         gridLayout.visibility = View.VISIBLE
@@ -74,6 +79,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             this.binding.btnChoice3,
             this.binding.btnChoice4
         )
+        val countdown = object : CountDownTimer(30100, 1000) {
+            override fun onTick(p0: Long) {
+                timer.text = "${p0 / 1000}s"
+            }
+
+            override fun onFinish() {
+                gridLayout.visibility = View.GONE
+                result.visibility = View.GONE
+            }
+        }
+        countdown.start()
     }
 
     private fun checkAnswer(answer: Int, result: TextView, totalQuestions: TextView) {
