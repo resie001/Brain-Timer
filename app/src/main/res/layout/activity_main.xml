@@ -43,7 +43,7 @@
             android:layout_marginEnd="16dp"
             android:background="#17CEFF"
             android:padding="8dp"
-            android:text="0/0"
+            tools:text="0/0"
             android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

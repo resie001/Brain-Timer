@@ -15,6 +15,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityMainBinding
     private val listAnswer = mutableListOf<Int>()
     private var correctAnswer = -1
+    private var totalQuestion = 0
+    private var totalCorrectQuestion = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             this.btnChoice3.setOnClickListener(this@MainActivity)
             this.btnChoice4.setOnClickListener(this@MainActivity)
             this.btnStart.setOnClickListener(this@MainActivity)
+            this.tvTotalQuestions.text =
+                "${this@MainActivity.totalCorrectQuestion} / ${this@MainActivity.totalQuestion}"
         }
     }
 
@@ -32,29 +36,61 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         when (p0) {
             this.binding.btnStart -> this.start(
                 this.binding.btnStart,
-                this.binding.gridContainer,
-                this.binding.tvQuestion,
-                this.binding.btnChoice1,
-                this.binding.btnChoice2,
-                this.binding.btnChoice3,
-                this.binding.btnChoice4
+                this.binding.gridContainer
+            )
+            this.binding.btnChoice1 -> this.checkAnswer(
+                this.binding.btnChoice1.text.toString().toInt(),
+                this.binding.tvResult,
+                this.binding.tvTotalQuestions
+            )
+            this.binding.btnChoice2 -> this.checkAnswer(
+                this.binding.btnChoice2.text.toString().toInt(),
+                this.binding.tvResult,
+                this.binding.tvTotalQuestions
+            )
+            this.binding.btnChoice3 -> this.checkAnswer(
+                this.binding.btnChoice3.text.toString().toInt(),
+                this.binding.tvResult,
+                this.binding.tvTotalQuestions
+            )
+            this.binding.btnChoice4 -> this.checkAnswer(
+                this.binding.btnChoice4.text.toString().toInt(),
+                this.binding.tvResult,
+                this.binding.tvTotalQuestions
             )
         }
     }
 
     private fun start(
         button: Button,
-        gridLayout: GridLayout,
-        textView: TextView,
-        buttonChoice1: Button,
-        buttonChoice2: Button,
-        buttonChoice3: Button,
-        buttonChoice4: Button
+        gridLayout: GridLayout
     ) {
         button.visibility = View.GONE
         gridLayout.visibility = View.VISIBLE
-        this.generateQuestion(textView)
-        this.generateAnswer(buttonChoice1, buttonChoice2, buttonChoice3, buttonChoice4)
+        this.generateQuestion(this.binding.tvQuestion)
+        this.generateAnswer(
+            this.binding.btnChoice1,
+            this.binding.btnChoice2,
+            this.binding.btnChoice3,
+            this.binding.btnChoice4
+        )
+    }
+
+    private fun checkAnswer(answer: Int, result: TextView, totalQuestions: TextView) {
+        if (this.correctAnswer == answer) {
+            result.text = "Benar"
+            this.totalCorrectQuestion++
+        } else result.text = "Salah"
+        this.totalQuestion++
+        totalQuestions.text =
+            "${this@MainActivity.totalCorrectQuestion} / ${this@MainActivity.totalQuestion}"
+        this.generateQuestion(this.binding.tvQuestion)
+        this.generateAnswer(
+            this.binding.btnChoice1,
+            this.binding.btnChoice2,
+            this.binding.btnChoice3,
+            this.binding.btnChoice4
+        )
     }
 
     private fun generateAnswer(
