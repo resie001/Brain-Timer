@@ -77,9 +77,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         buttonChoice1.text = this.listAnswer[0].toString()
-        buttonChoice1.text = this.listAnswer[1].toString()
-        buttonChoice1.text = this.listAnswer[2].toString()
-        buttonChoice1.text = this.listAnswer[3].toString()
+        buttonChoice2.text = this.listAnswer[1].toString()
+        buttonChoice3.text = this.listAnswer[2].toString()
+        buttonChoice4.text = this.listAnswer[3].toString()
     }
 
     private fun generateQuestion(textView: TextView) {
