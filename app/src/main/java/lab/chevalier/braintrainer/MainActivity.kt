@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             this.btnChoice4.setOnClickListener(this@MainActivity)
             this.btnStart.setOnClickListener(this@MainActivity)
             this.tvTotalQuestions.text =
-                "${this@MainActivity.totalCorrectQuestion} / ${this@MainActivity.totalQuestion}"
+                "${this@MainActivity.totalCorrectQuestion}/${this@MainActivity.totalQuestion}"
         }
     }
 
@@ -87,6 +87,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             override fun onFinish() {
                 gridLayout.visibility = View.GONE
                 result.visibility = View.GONE
+                this@MainActivity.generateResult(
+                    this@MainActivity.binding.tvResultTotal,
+                    this@MainActivity.binding.tvResultCorrect,
+                    this@MainActivity.binding.tvResultWrong
+                )
             }
         }
         countdown.start()
@@ -94,9 +99,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun checkAnswer(answer: Int, result: TextView, totalQuestions: TextView) {
         if (this.correctAnswer == answer) {
-            result.text = "Benar"
+            with(result) {
+                this.text = "Benar"
+                this.setTextColor(resources.getColor(R.color.green))
+            }
             this.totalCorrectQuestion++
-        } else result.text = "Salah"
+        } else {
+            with(result) {
+                this.text = "Salah"
+                this.setTextColor(resources.getColor(R.color.red))
+            }
+        }
         this.totalQuestion++
         totalQuestions.text =
             "${this@MainActivity.totalCorrectQuestion} / ${this@MainActivity.totalQuestion}"
@@ -107,6 +120,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             this.binding.btnChoice3,
             this.binding.btnChoice4
         )
+    }
+
+    private fun generateResult(total: TextView, correct: TextView, wrong: TextView) {
+        with(total) {
+            this.visibility = View.VISIBLE
+            this.text = this@MainActivity.totalQuestion.toString()
+        }
+        with(correct) {
+            this.visibility = View.VISIBLE
+            this.text = this@MainActivity.totalCorrectQuestion.toString()
+        }
+        with(wrong) {
+            this.visibility = View.VISIBLE
+            this.text =
+                (this@MainActivity.totalQuestion - this@MainActivity.totalCorrectQuestion).toString()
+        }
     }
 
     private fun generateAnswer(
